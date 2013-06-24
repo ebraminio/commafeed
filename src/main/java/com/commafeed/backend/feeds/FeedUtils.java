@@ -105,17 +105,21 @@ public class FeedUtils {
 		return encoding;
 	}
 
-	public static String handleContent(String content, String baseUri) {
+	public static String handleContent(String content, String baseUri, boolean stripBr) {
 		if (StringUtils.isNotBlank(content)) {
 			baseUri = StringUtils.trimToEmpty(baseUri);
 			Whitelist whitelist = new Whitelist();
-			whitelist.addTags("a", "b", "blockquote", "br", "caption", "cite",
+			whitelist.addTags("a", "b", "blockquote", "caption", "cite",
 					"code", "col", "colgroup", "dd", "div", "dl", "dt", "em",
 					"h1", "h2", "h3", "h4", "h5", "h6", "i", "iframe", "img",
 					"li", "ol", "p", "pre", "q", "small", "strike", "strong",
 					"sub", "sup", "table", "tbody", "td", "tfoot", "th",
 					"thead", "tr", "u", "ul");
 
+			if (!stripBr) {
+				whitelist.addTags("br");
+			}
+				
 			whitelist.addAttributes("div", "dir");
 			whitelist.addAttributes("pre", "dir");
 			whitelist.addAttributes("code", "dir");
